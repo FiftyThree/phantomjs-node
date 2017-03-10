@@ -1,7 +1,14 @@
-import phantomjs from 'phantomjs-prebuilt';
 import path from 'path';
 import Phantom from '../phantom';
 import Page from '../page';
+
+function getPhantomJSPath() {
+    return process.env.PHANTOMJS_BINARY || throw new Error('PHANTOMJS_BINARY environment variable not set');
+}
+
+const phantomjs = {
+    path: getPhantomJSPath();
+}
 
 describe('Phantom', () => {
     let instance;
