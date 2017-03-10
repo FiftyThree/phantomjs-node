@@ -1,6 +1,5 @@
 // @flow
 
-import phantomjs from 'phantomjs-prebuilt';
 import {spawn} from 'child_process';
 import os from 'os';
 import path from 'path';
@@ -31,6 +30,10 @@ function createLogger() {
     });
 }
 
+function getPhantomJSPath() {
+  return process.env.PHANTOMJS_BINARY || throw new Error('PHANTOMJS_BINARY environment variable was not set.');
+}
+
 const defaultLogger = createLogger();
 
 /**
@@ -53,9 +56,9 @@ export default class Phantom {
      * @param [logLevel] log level to apply on the logger (if unset or default)
      */
     constructor(args?: string[] = [],
-        {phantomPath = phantomjs.path, logger = defaultLogger, logLevel = defaultLogLevel}: Config =
+        {phantomPath = getPhantomJSPath(), logger = defaultLogger, logLevel = defaultLogLevel}: Config =
         {
-            phantomPath: phantomjs.path,
+            phantomPath: getPhantomJSPath(),
             logger: defaultLogger,
             logLevel: defaultLogLevel,
         }) {
